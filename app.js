@@ -33,6 +33,27 @@ void (async () => {
       firstName: 'Craig T.',
       lastName: 'Nelson'
     })
+
+    // findByPk()
+    // const movieById = await Movie.findByPk(2)
+    // console.log(movieById.toJSON())
+
+    // findOne()
+    // const movieByRuntime = await Movie.findOne({ where: { runtime: 103 } })
+    // console.log(movieByRuntime.toJSON())
+
+    // findAll()
+    const movies = await Movie.findAll()
+    console.log(movies.map((movie) => movie.toJSON()))
+
+    // findAll() but filter results
+    const people = await Person.findAll({
+      where: {
+        lastName: 'Nelson'
+      }
+    })
+
+    console.log(people.map((person) => person.toJSON()))
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
       const errors = error.errors.map((err) => err.message)
