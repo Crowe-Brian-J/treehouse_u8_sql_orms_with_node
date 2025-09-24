@@ -19,6 +19,16 @@ void (async () => {
       isAvailableOnVHS: true
     })
 
+    // New instance
+    const movie3 = await Movie.build({
+      title: 'Toy Story 3',
+      runtime: 103,
+      releaseDate: '2010-06-18',
+      isAvailableOnVHS: false
+    })
+
+    await movie3.save()
+
     const person = await Person.create({
       firstName: 'Craig T.',
       lastName: 'Nelson'
