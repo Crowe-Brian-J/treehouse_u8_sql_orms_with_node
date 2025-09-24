@@ -63,6 +63,7 @@ module.exports = (sequelize) => {
       }
     },
     {
+      paranoid: true,
       modelName: 'movie',
       timestamps: false, // Disable timestamps
       sequelize

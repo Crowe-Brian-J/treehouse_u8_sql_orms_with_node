@@ -72,7 +72,7 @@ void (async () => {
 
     // Use findByPk() to find the record to update - use .save() to update
 
-    const toyStory3 = await Movie.findByPk(3)
+    // const toyStory3 = await Movie.findByPk(3)
     // toyStory3.isAvailableOnVHS = true
     // await toyStory3.save()
 
@@ -84,15 +84,28 @@ void (async () => {
     // console.log(toyStory3.get({ plain: true }))
 
     // Which attributes to save
-    await toyStory3.update(
-      {
-        title: 'Trinket Tale 3',
-        isAvailableOnVHS: false
-      },
-      { fields: ['isAvailableOnVHS'] }
-    )
 
-    console.log(toyStory3.get({ plain: true }))
+    // await toyStory3.update(
+    //   {
+    //     title: 'Trinket Tale 3',
+    //     isAvailableOnVHS: false
+    //   },
+    //   { fields: ['isAvailableOnVHS'] }
+    // )
+
+    // console.log(toyStory3.get({ plain: true }))
+
+    // Delete a movie - findByPk()
+
+    // Find a record
+    const toyStory = await Movie.findByPk(1)
+
+    // Delete a record
+    await toyStory.destroy()
+
+    // Find and log all movies
+    const movies = await Movie.findAll()
+    console.log(movies.map((movie) => movie.toJSON()))
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
       const errors = error.errors.map((err) => err.message)
