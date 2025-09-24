@@ -1,5 +1,6 @@
 const db = require('./db')
 const { Movie, Person } = db.models
+const { Op } = db.Sequelize
 
 void (async () => {
   await db.sequelize.sync({ force: true })
@@ -43,17 +44,31 @@ void (async () => {
     // console.log(movieByRuntime.toJSON())
 
     // findAll()
-    const movies = await Movie.findAll()
-    console.log(movies.map((movie) => movie.toJSON()))
+    // const movies = await Movie.findAll()
+    // console.log(movies.map((movie) => movie.toJSON()))
 
     // findAll() but filter results
-    const people = await Person.findAll({
+    // const people = await Person.findAll({
+    //   where: {
+    //     lastName: 'Nelson'
+    //   }
+    // })
+
+    // Return a subset of data w/ attributes - using operators (Op)
+    const movies = await Movie.findAll({
+      attributes: ['id', 'title'],
       where: {
-        lastName: 'Nelson'
-      }
+        releaseDate: {
+          [Op.gte]: '2004-01-01' // >= this date
+        },
+        runtime: {
+          [Op.gt]: 95 // > 95
+        }
+      },
+      order: [['id', 'DESC']] // IDs in descending order
     })
 
-    console.log(people.map((person) => person.toJSON()))
+    console.log(movies.map((movie) => movie.toJSON()))
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
       const errors = error.errors.map((err) => err.message)
