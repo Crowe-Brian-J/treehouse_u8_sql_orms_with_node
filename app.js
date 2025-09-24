@@ -1,5 +1,5 @@
 const db = require('./db')
-const { Movie } = db.models
+const { Movie, Person } = db.models
 
 void (async () => {
   await db.sequelize.sync({ force: true })
@@ -17,6 +17,11 @@ void (async () => {
       runtime: 115,
       releaseDate: '2004-04-14',
       isAvailableOnVHS: true
+    })
+
+    const person = await Person.create({
+      firstName: 'Craig T.',
+      lastName: 'Nelson'
     })
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
