@@ -55,20 +55,44 @@ void (async () => {
     // })
 
     // Return a subset of data w/ attributes - using operators (Op)
-    const movies = await Movie.findAll({
-      attributes: ['id', 'title'],
-      where: {
-        releaseDate: {
-          [Op.gte]: '2004-01-01' // >= this date
-        },
-        runtime: {
-          [Op.gt]: 95 // > 95
-        }
-      },
-      order: [['id', 'DESC']] // IDs in descending order
-    })
+    // const movies = await Movie.findAll({
+    //   attributes: ['id', 'title'],
+    //   where: {
+    //     releaseDate: {
+    //       [Op.gte]: '2004-01-01' // >= this date
+    //     },
+    //     runtime: {
+    //       [Op.gt]: 95 // > 95
+    //     }
+    //   },
+    //   order: [['id', 'DESC']] // IDs in descending order
+    // })
 
-    console.log(movies.map((movie) => movie.toJSON()))
+    // console.log(movies.map((movie) => movie.toJSON()))
+
+    // Use findByPk() to find the record to update - use .save() to update
+
+    const toyStory3 = await Movie.findByPk(3)
+    // toyStory3.isAvailableOnVHS = true
+    // await toyStory3.save()
+
+    // use .update() to update
+
+    // await toyStory3.update({
+    //   isAvailableOnVHS: true
+    // })
+    // console.log(toyStory3.get({ plain: true }))
+
+    // Which attributes to save
+    await toyStory3.update(
+      {
+        title: 'Trinket Tale 3',
+        isAvailableOnVHS: false
+      },
+      { fields: ['isAvailableOnVHS'] }
+    )
+
+    console.log(toyStory3.get({ plain: true }))
   } catch (error) {
     if (error.name === 'SequelizeValidationError') {
       const errors = error.errors.map((err) => err.message)
