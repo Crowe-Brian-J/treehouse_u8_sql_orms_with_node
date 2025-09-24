@@ -18,7 +18,12 @@ void (async () => {
       releaseDate: '2004-04-14',
       isAvailableOnVHS: true
     })
-  } catch (err) {
-    console.error('Error connecting to the database: ', err)
+  } catch (error) {
+    if (error.name === 'SequelizeValidationError') {
+      const errors = error.errors.map((err) => err.message)
+      console.error('Validation errors: ', errors)
+    } else {
+      throw error
+    }
   }
 })()
