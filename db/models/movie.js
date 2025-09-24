@@ -62,7 +62,11 @@ module.exports = (sequelize) => {
         }
       }
     },
-    { sequelize }
+    {
+      modelName: 'movie',
+      timestamps: false, // Disable timestamps
+      sequelize
+    }
   )
   return Movie
 }
